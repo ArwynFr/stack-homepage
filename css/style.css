@@ -1,0 +1,23 @@
+body {
+    background-image: url(/img/background.jpg);
+    font-family: 'Lato', sans-serif;
+    text-align: justify;
+}
+
+main#main {
+    max-width: 60em;
+    margin: 0 auto;
+}
+
+#before p {
+    font-family: 'Pathway Gothic One', sans-serif;
+    font-size: 14pt;
+    margin: 0;
+}
+
+#before img {
+    position: relative;
+    float: right;
+    top: -60px;
+    right: -90px;
+}
