@@ -14,8 +14,8 @@ jobs:
       - name: Build the Docker image
         run: |
           docker build . --file Dockerfile \
-            --tag docker.pkg.github.com/ArwynFr/homepage/homepage:$(date +%s) \
-            --tag docker.pkg.github.com/ArwynFr/homepage/homepage:git-$(git rev-parse --short "$GITHUB_SHA") \
-            --tag docker.pkg.github.com/ArwynFr/homepage/homepage:master
+            --tag docker.pkg.github.com/arwynfr/homepage/homepage:$(date +%s) \
+            --tag docker.pkg.github.com/arwynfr/homepage/homepage:git-$(git rev-parse --short "$GITHUB_SHA") \
+            --tag docker.pkg.github.com/arwynfr/homepage/homepage:master
       - name: Push image to Github Packages
-        run: docker push docker.pkg.github.com/ArwynFr/homepage/homepage
+        run: docker push docker.pkg.github.com/arwynfr/homepage/homepage
