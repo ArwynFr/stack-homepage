@@ -18,4 +18,6 @@ jobs:
             --tag docker.pkg.github.com/arwynfr/homepage/homepage:git-$(git rev-parse --short "$GITHUB_SHA") \
             --tag docker.pkg.github.com/arwynfr/homepage/homepage:master
       - name: Push image to Github Packages
-        run: docker push docker.pkg.github.com/arwynfr/homepage/homepage
+        run: |
+          docker login docker.pkg.github.com --username arwynfr --password ${{ secrets.GITHUB_TOKEN }}
+          docker push docker.pkg.github.com/arwynfr/homepage/homepage
