@@ -1,4 +1,4 @@
-name: CI
+name: Publish stack to production
 
 on:
   registry_package:
@@ -22,9 +22,12 @@ jobs:
     
       - name: Update stack
         uses: appleboy/ssh-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: ~/stacks/update-stack.sh homepage
+          envs: GITHUB_TOKEN
     
