@@ -5,7 +5,7 @@
 
 ## What is this repository about
 
-This projects is the source for https://www.arwyn.fr
+This projects is the source for <https://www.arwyn.fr>
 
 ## Rules and standards
 
