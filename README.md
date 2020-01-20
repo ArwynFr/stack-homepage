@@ -15,9 +15,9 @@ This project is licensed under [MIT License](/LICENSE)
 
 This project was also a way for me to try out advanced github features :
 *   Github Actions are triggerd on push / master
-*   It builds the [Dockerfile](/Dockerfile) into an image
+*   It builds the [Dockerfile](/src/Dockerfile) into an image
 *   The image is pushed to Github Packages
-*   The project's [Docker stack file](/docker-compose.yml) is scp to the server
+*   The project's [Docker stack file](/stack/docker-compose.yml) is scp to the server
 *   The image is pulled from Github Packages
 *   The stack is deployed on a swarm behind a traefik reverse
 
