@@ -8,6 +8,8 @@ services:
     configs:
       - source: nginx
         target: /etc/nginx/nginx.conf
+      - source: expires
+        target: /etc/nginx/conf.d/expires.global
     deploy:
       labels:
         - "traefik.enable=true"
@@ -32,3 +34,5 @@ networks:
 configs:
   nginx:
     file: ./nginx.conf
+  expires:
+    file: ./expires.conf
