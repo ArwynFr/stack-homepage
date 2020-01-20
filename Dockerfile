@@ -7,8 +7,7 @@ COPY robots.txt .
 COPY sitemap.xml .
 COPY css ./css
 COPY img ./img
-RUN find . -name *.css -exec minify -o {} {} \;
-RUN find . -name *.css -printf "gzip -c %p > %p.gz\n" | sh
+RUN for ext in "css" "js" "html"; do find . -name "*.$ext" -exec minify -o {} {} \; -printf "gzip -c %p > %p.gz\n" | sh; done
 
 FROM nginx:1.17.7-alpine
 WORKDIR /usr/share/nginx/html
