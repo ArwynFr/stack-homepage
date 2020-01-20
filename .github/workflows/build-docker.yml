@@ -15,7 +15,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build . --file Dockerfile \
+          docker build ./src --file ./src/Dockerfile \
             --tag docker.pkg.github.com/arwynfr/homepage/homepage:$(date +%s) \
             --tag docker.pkg.github.com/arwynfr/homepage/homepage:git-$(git rev-parse --short "$GITHUB_SHA") \
             --tag docker.pkg.github.com/arwynfr/homepage/homepage:master
