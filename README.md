@@ -21,7 +21,7 @@ This project was also a way for me to try out advanced github features :
 *   The image is pulled from Github Packages
 *   The stack is deployed on a swarm behind a traefik reverse
 
-The traefik configuration is beyond the scope of this repository
+The traefik configuration is beyond the scope of this repository, but it is avilable on [my infrastructure repository](https://github.com/ArwynFr/infrastructure).
 
 ## How to contribute
 
