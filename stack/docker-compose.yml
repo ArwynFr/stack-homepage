@@ -13,8 +13,10 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.services.homepage.loadBalancer.server.port=80"        
+        - "traefik.http.services.homepage.loadBalancer.server.port=80"
         - "traefik.http.middlewares.homepage.headers.sslHost=www.arwyn.fr"
+        - "traefik.http.middlewares.homepage.headers.sslRedirect=true"
+        - "traefik.http.middlewares.homepage.headers.sslForceHost=true"
         - "traefik.http.routers.homepage.entrypoints=https"
         - "traefik.http.routers.homepage.rule=Host(`arwyn.fr`,`www.arwyn.fr`)"
         - "traefik.http.routers.homepage.middlewares=secure@file,homepage@docker"
