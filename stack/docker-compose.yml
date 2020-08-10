@@ -33,7 +33,7 @@ services:
     logging:
       driver: gelf
       options:
-        gelf-address: udp://seq.chezsquall.net:11201
+        gelf-address: udp://localhost:11201
 
 networks:
   reverse:
