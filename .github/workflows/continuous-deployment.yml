@@ -26,15 +26,9 @@ jobs:
 
       - name: Deploy stack
         env:
-          DOCKER_CACERT: ${{ secrets.DOCKER_CACERT }}
-          DOCKER_CERT: ${{ secrets.DOCKER_CERT }}
-          DOCKER_KEY: ${{ secrets.DOCKER_KEY }}
-          DOCKER_HOST: ${{ secrets.DOCKER_HOST }}
-          DOCKER_TLS_VERIFY: 1
+          DOCKER_HOST: ssh://${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}          
+          SSH_KEY: ${{ secrets.SSH_KEY }}
         run: |
-          mkdir --parents ~/.docker
-          echo "$DOCKER_CACERT" > ~/.docker/ca.pem
-          echo "$DOCKER_CERT" > ~/.docker/cert.pem
-          echo "$DOCKER_KEY" > ~/.docker/key.pem
+          ssh-add <(echo "$SSH_KEY")
           docker stack rm homepage
           docker stack deploy --prune --compose-file ./stack/docker-compose.yml homepage
