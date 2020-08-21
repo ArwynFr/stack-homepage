@@ -1,0 +1,36 @@
+name: continuous-deployment
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout source files
+        uses: actions/checkout@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v1
+        with:
+          registry: docker.pkg.github.com
+          repository: arwynfr/stack-homepage/homepage
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          tags: master
+          path: ./src
+
+      - name: Create remote docker context
+        uses: arwynfr/actions-docker-context@master
+        with:
+          context_name: remote
+          docker_host: ${{ secrets.DOCKER_HOST }}
+          ssh_cert: ${{ secrets.SSH_CERT }}
+          ssh_key: ${{ secrets.SSH_KEY }}
+          
+      - name: Deploy stack on the server
+        run: |
+          docker --context remote stack rm homepage
+          docker --context remote stack deploy --compose-file stack/docker-compose.yml homepage
