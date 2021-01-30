@@ -1,7 +1,7 @@
 # homepage
 
 [![GitHub Actions](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Farwynfr%2Fhomepage%2Fbadge)](https://actions-badge.atrox.dev/arwynfr/homepage/goto)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f6e55299939544fd9350d06c96557d9b)](https://www.codacy.com/manual/ArwynFr/homepage?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ArwynFr/homepage&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/aa07f8b632df461d875388e6ea429d07)](https://www.codacy.com/gh/ArwynFr/stack-homepage/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ArwynFr/stack-homepage&amp;utm_campaign=Badge_Grade)
 
 ## What is this repository about
 
