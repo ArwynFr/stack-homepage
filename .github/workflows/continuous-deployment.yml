@@ -32,5 +32,5 @@ jobs:
           
       - name: Deploy stack on the server
         run: |
-          docker --context remote stack rm homepage
-          docker --context remote stack deploy --compose-file stack/docker-compose.yml homepage
+          docker --context remote pull docker.pkg.github.com/arwynfr/stack-homepage/homepage:master
+          docker --context remote stack deploy --prune --compose-file stack/docker-compose.yml homepage
