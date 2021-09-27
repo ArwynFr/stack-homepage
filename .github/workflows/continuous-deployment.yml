@@ -21,17 +21,3 @@ jobs:
           password: ${{ github.token }}
           tags: master
           path: ./src
-
-      - name: Create remote docker context
-        uses: arwynfr/actions-docker-context@master
-        with:
-          context_name: remote
-          docker_host: ${{ secrets.DOCKER_HOST }}
-          ssh_cert: ${{ secrets.SSH_CERT }}
-          ssh_key: ${{ secrets.SSH_KEY }}
-          
-      - name: Deploy stack on the server
-        run: |
-          echo "${{ github.token }}" | docker --context remote login https://docker.pkg.github.com --password-stdin --username arwynfr
-          docker --context remote pull docker.pkg.github.com/arwynfr/stack-homepage/homepage:master
-          docker --context remote stack deploy --prune --compose-file stack/docker-compose.yml homepage
