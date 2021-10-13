@@ -10,7 +10,7 @@ jobs:
     steps:
 
       - name: Checkout source files
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v1
@@ -21,3 +21,15 @@ jobs:
           password: ${{ github.token }}
           tags: master
           path: ./src
+
+  deploy:
+    runs-on: self-hosted
+    steps:
+
+      - name: Checkout stack files
+        uses: actions/checkout@v2
+        with:
+          repository: arwynfr/homepage-stack
+
+      - name: Deploy stack to the swarm
+        run: docker stack deploy --compose-file docker-compose.yml --prune homepage
