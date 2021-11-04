@@ -35,4 +35,4 @@ jobs:
           repository: arwynfr/homepage-stack
 
       - name: Deploy stack to the swarm
-        run: docker stack deploy --compose-file docker-compose.yml --prune homepage
+        run: docker pull docker.pkg.github.com/arwynfr/stack-homepage/homepage:master && docker stack deploy --compose-file docker-compose.yml --prune homepage
