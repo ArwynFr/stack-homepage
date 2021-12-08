@@ -18,7 +18,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           registry: docker.pkg.github.com
-          repository: arwynfr/stack-homepage/homepage
+          repository: arwynfr/homepage
           username: ${{ github.actor }}
           password: ${{ github.token }}
           tags: master
@@ -31,8 +31,8 @@ jobs:
 
       - name: Checkout stack files
         uses: actions/checkout@v2
-        with:
-          repository: arwynfr/homepage-stack
 
       - name: Deploy stack to the swarm
-        run: docker pull docker.pkg.github.com/arwynfr/stack-homepage/homepage:master && docker stack deploy --compose-file docker-compose.yml --prune homepage
+        run: |
+          docker pull docker.pkg.github.com/arwynfr/homepage:master
+          docker stack deploy --compose-file stack/docker-compose.yml --prune homepage
