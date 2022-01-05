@@ -36,3 +36,4 @@ jobs:
         run: |
           docker pull docker.pkg.github.com/arwynfr/homepage/website:master
           docker stack deploy --compose-file stack/docker-compose.yml --prune homepage
+          docker service update --force homepage_web
