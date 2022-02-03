@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   web:
-    image: docker.pkg.github.com/arwynfr/homepage/website:master
+    image: ghcr.io/arwynfr/homepage:master
     networks:
       - reverse
     configs:
