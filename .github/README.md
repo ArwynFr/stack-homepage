@@ -1,8 +1,7 @@
 # homepage
 
 [![GitHub Actions](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Farwynfr%2Fhomepage%2Fbadge)](https://actions-badge.atrox.dev/arwynfr/homepage/goto)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/aa07f8b632df461d875388e6ea429d07)](https://www.codacy.com/gh/ArwynFr/stack-homepage/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ArwynFr/stack-homepage&amp;utm_campaign=Badge_Grade)
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/57151d564ff64ab4852a45be92a2c6f9)](https://app.codacy.com/gh/ArwynFr/homepage?utm_source=github.com&utm_medium=referral&utm_content=ArwynFr/homepage&utm_campaign=Badge_Grade_Settings)
 ## What is this repository about
 
 This projects is the source for <https://www.arwyn.fr>
