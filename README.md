@@ -1,0 +1,2 @@
+# homepage
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/57151d564ff64ab4852a45be92a2c6f9)](https://app.codacy.com/gh/ArwynFr/homepage?utm_source=github.com&utm_medium=referral&utm_content=ArwynFr/homepage&utm_campaign=Badge_Grade_Settings)
