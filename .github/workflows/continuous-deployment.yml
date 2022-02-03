@@ -12,14 +12,12 @@ jobs:
     steps:
 
       - name: Checkout source files
-        uses: actions/checkout@v2
-        
-      - name: Login with registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        uses: actions/checkout@v2        
 
       - name: Build and push Docker image
         run: |
           IMAGE=ghcr.io/arwynfr/homepage:master
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker build ./src --tag $IMAGE
           docker push $IMAGE
 
@@ -33,6 +31,7 @@ jobs:
 
       - name: Deploy stack to the swarm
         run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker pull ghcr.io/arwynfr/homepage:master
           docker stack deploy --compose-file stack/docker-compose.yml --prune homepage
           docker service update --force homepage_web
