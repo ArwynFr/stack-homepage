@@ -4,18 +4,18 @@ body {
   text-align: justify;
 }
 
-main#main {
+main {
   max-width: 60em;
   margin: 0 auto;
 }
 
-#before p {
+.before p {
   font-family: 'Pathway Gothic One', sans-serif;
   font-size: 14pt;
   margin: 0;
 }
 
-#before img {
+.before img {
   position: relative;
   float: right;
   top: -60px;
