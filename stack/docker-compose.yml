@@ -9,7 +9,7 @@ services:
       - source: nginx
         target: /etc/nginx/nginx.conf
       - source: expires
-        target: /etc/nginx/conf.d/expires.global
+        target: /etc/nginx/conf.d/expires.conf
     deploy:
       labels:
         - "traefik.enable=true"
