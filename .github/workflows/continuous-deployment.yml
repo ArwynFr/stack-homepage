@@ -1,37 +1,24 @@
-name: continuous-deployment
+name: Continuous Deployment
 
 on:
+  workflow_dispatch:
   push:
     branches: [master]
-  schedule:
-    - cron: "0 0 * * 0"
+
+env:
+  STACK_VERSION: ${{ github.run_id }}
+  STACK_IMAGE: arwynfr_homepage
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  release:
+    runs-on: [self-hosted]
     steps:
 
       - name: Checkout source files
-        uses: actions/checkout@v2        
-
-      - name: Build and push Docker image
-        run: |
-          IMAGE=ghcr.io/arwynfr/homepage:master
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          docker build ./src --tag $IMAGE
-          docker push $IMAGE
-
-  deploy:
-    needs: build
-    runs-on: self-hosted
-    steps:
-
-      - name: Checkout stack files
         uses: actions/checkout@v2
 
-      - name: Deploy stack to the swarm
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          docker pull ghcr.io/arwynfr/homepage:master
-          docker stack deploy --compose-file stack/docker-compose.yml --prune homepage
-          docker service update --force homepage_web
+      - name: Build image
+        run: docker build ./src --tag $IMAGE
+
+      - name: Deploy stack
+        run : docker stack deploy --compose-file ./stack/docker-compose.yml --prune homepage

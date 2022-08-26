@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   web:
-    image: ghcr.io/arwynfr/homepage:master
+    image: ${STACK_IMAGE}
     networks:
       - reverse
     configs:
@@ -30,10 +30,6 @@ services:
         - "traefik.http.routers.homepage_unsecure.rule=Host(`arwyn.fr`,`www.arwyn.fr`)"
         - "traefik.http.routers.homepage_unsecure.middlewares=homepage@docker"
         - "traefik.http.routers.homepage_unsecure.service=homepage"
-    logging:
-      driver: gelf
-      options:
-        gelf-address: udp://seq.chezsquall.net:11201
 
 networks:
   reverse:
@@ -42,5 +38,7 @@ networks:
 configs:
   nginx:
     file: ./nginx.conf
+    name: nginx-${STACK_VERSION}
   expires:
     file: ./expires.conf
+    name: expires-${STACK_VERSION}
