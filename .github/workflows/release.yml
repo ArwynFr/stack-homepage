@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   push:
     branches: [master]
+    paths:
+      - 'src/**'
+      - 'stack/**'
 
 env:
   STACK_VERSION: ${{ github.run_id }}
