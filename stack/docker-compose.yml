@@ -30,6 +30,7 @@ services:
         - "traefik.http.routers.homepage_unsecure.rule=Host(`arwyn.fr`,`www.arwyn.fr`)"
         - "traefik.http.routers.homepage_unsecure.middlewares=homepage@docker"
         - "traefik.http.routers.homepage_unsecure.service=homepage"
+    user: "33:33"
 
 networks:
   reverse:
