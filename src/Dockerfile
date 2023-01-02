@@ -1,4 +1,4 @@
-FROM debian:11.5-slim as minifier
+FROM debian:11.6-slim as minifier
 WORKDIR /src/homepage
 RUN apt-get update --yes
 RUN apt-get install --yes --no-install-recommends minify=2.7.2-1+b6
