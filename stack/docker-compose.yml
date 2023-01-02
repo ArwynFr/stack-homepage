@@ -10,8 +10,6 @@ services:
         target: /etc/nginx/conf.d/expires.conf
       - source: gzip
         target: /etc/nginx/conf.d/gzip.conf
-      - source: logs
-        target: /etc/nginx/conf.d/logs.conf
     deploy:
       labels:
         - "traefik.enable=true"
@@ -47,9 +45,6 @@ configs:
   gzip:
     file: ./gzip.conf
     name: gzip-${STACK_VERSION}
-  logs:
-    file: ./logs.conf
-    name: logs-${STACK_VERSION}
 
 volumes:
   tmpfs:
