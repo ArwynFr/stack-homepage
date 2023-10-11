@@ -1,4 +1,4 @@
-FROM debian:12.1-slim as minifier
+FROM debian:12.2-slim as minifier
 WORKDIR /src/homepage
 RUN apt-get update --yes
 RUN apt-get install --yes --no-install-recommends minify=2.12.4-2
