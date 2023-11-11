@@ -2,6 +2,7 @@
 
 [![GitHub Actions](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Farwynfr%2Fhomepage%2Fbadge)](https://actions-badge.atrox.dev/arwynfr/homepage/goto)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/57151d564ff64ab4852a45be92a2c6f9)](https://app.codacy.com/gh/ArwynFr/homepage?utm_source=github.com&utm_medium=referral&utm_content=ArwynFr/homepage&utm_campaign=Badge_Grade_Settings)
+
 ## What is this repository about
 
 This projects is the source for <https://www.arwyn.fr>
@@ -27,12 +28,13 @@ The delay problem was overtaken by diverting github self-hosted actions runner a
 At first I also intended to separate stack vs image code, in order to prevent the runner from cloning the whole repository. However this proved cumbersome. The submodule was finally merged back and I'll be looking into sparse chekouts instead.
 
 The build process is now :
-*   Github Actions are triggerd on push / master
-*   The workflow builds the [Dockerfile](/src/Dockerfile) into an image and push it to Github Packages
-*   The workflow schedules a deploy job on the self-hosted runner
-*   The runner clone the repository
-*   The docker engine pulls the website image from Github Packages
-*   The stack is deployed on the local swarm behind a traefik reverse
+
+- Github Actions are triggerd on push / master
+- The workflow builds the [Dockerfile](/src/Dockerfile) into an image and push it to Github Packages
+- The workflow schedules a deploy job on the self-hosted runner
+- The runner clone the repository
+- The docker engine pulls the website image from Github Packages
+- The stack is deployed on the local swarm behind a traefik reverse
 
 ## How to contribute
 
