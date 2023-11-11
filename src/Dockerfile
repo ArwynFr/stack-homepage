@@ -1,10 +1,10 @@
-FROM debian:12.1-slim as minifier
+FROM debian:12.1-slim@sha256:24c92a69df28b21676d721fe18c0bf64138bfc69b486746ad935b49cc31b0b91 as minifier
 WORKDIR /src/homepage
 RUN apt-get update --yes
 RUN apt-get install --yes --no-install-recommends minify=2.12.4-2
 COPY . .
 RUN for ext in "css" "js" "html"; do find . -name "*.$ext" -exec minify -o {} {} \; -printf "gzip -9c %p > %p.gz\n" | sh; done
 
-FROM nginxinc/nginx-unprivileged:1.25.2-alpine-slim
+FROM nginxinc/nginx-unprivileged:1.25.2-alpine-slim@sha256:ab90b7a54c4a0de4fc94ad0af201674c4379dde5ee1153606f0241c11063a8ad
 WORKDIR /usr/share/nginx/html
 COPY --from=minifier /src/homepage .
