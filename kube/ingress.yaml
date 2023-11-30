@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homepage
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    external-dns.alpha.kubernetes.io/hostname: www.arwyn.fr
+spec:
+  tls:
+    - secretName: cert-www-arwyn-fr
+      hosts:
+        - www.arwyn.fr
+  rules:
+    - host: www.arwyn.fr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: homepage
+                port:
+                  number: 8080

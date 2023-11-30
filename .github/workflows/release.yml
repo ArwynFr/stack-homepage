@@ -6,22 +6,12 @@ on:
     branches: [main]
     paths:
       - 'src/**'
-      - 'stack/**'
-
-env:
-  STACK_VERSION: ${{ github.run_id }}
-  STACK_IMAGE: arwynfr_homepage
+      - 'kube/**'
 
 jobs:
   release:
-    runs-on: [self-hosted]
-    steps:
-
-      - name: Checkout source files
-        uses: actions/checkout@v4
-
-      - name: Build image
-        run: docker build ./src --tag ${STACK_IMAGE}
-
-      - name: Deploy stack
-        run : docker stack deploy --compose-file ./stack/docker-compose.yml --prune homepage
+    uses: arwynfr/arwynfr/.github/workflows/rke2-deployment.yaml@main
+    with:
+      sources: ./src
+      resources: ./kube
+      version: ${{ github.run_id }}
