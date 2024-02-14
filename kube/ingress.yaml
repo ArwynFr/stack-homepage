@@ -5,11 +5,13 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     external-dns.alpha.kubernetes.io/hostname: www.arwyn.fr
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
 spec:
   tls:
     - secretName: cert-www-arwyn-fr
       hosts:
         - www.arwyn.fr
+        - arwyn.fr
   rules:
     - host: www.arwyn.fr
       http:
