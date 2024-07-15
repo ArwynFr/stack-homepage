@@ -5,6 +5,6 @@ RUN apt-get install --yes --no-install-recommends minify=2.12.4-2
 COPY . .
 RUN for ext in "css" "js" "html"; do find . -name "*.$ext" -exec minify -o {} {} \; -printf "gzip -9c %p > %p.gz\n" | sh; done
 
-FROM nginxinc/nginx-unprivileged:1.27.0-alpine-slim@sha256:3eee4da6664c4bfce131d7a8ea7536504665c3c907c9137cb88da09b911f2d81
+FROM nginxinc/nginx-unprivileged:1.27.0-alpine-slim@sha256:3574f1b607852fd7a6a290246b1ba84e206bd2e69ccd897ebdcc61e71f4537ae
 WORKDIR /usr/share/nginx/html
 COPY --from=minifier /src/homepage .
