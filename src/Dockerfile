@@ -1,4 +1,4 @@
-FROM debian:12.6-slim@sha256:5f7d5664eae4a192c2d2d6cb67fc3f3c7891a8722cd2903cc35aa649a12b0c8d as minifier
+FROM debian:12.6-slim@sha256:2ccc7e39b0a6f504d252f807da1fc4b5bcd838e83e4dec3e2f57b2a4a64e7214 as minifier
 WORKDIR /src/homepage
 RUN apt-get update --yes
 RUN apt-get install --yes --no-install-recommends minify=2.12.4-2
