@@ -4,6 +4,6 @@ COPY . .
 RUN for ext in "css" "js" "html"; do find . -name "*.$ext" -exec minify -o {} {} \;; done
 RUN for ext in "css" "js" "png" "jpg"; do find . -name "*.$ext" -exec gzip -9k {} \;; done
 
-FROM nginxinc/nginx-unprivileged:1.27.2-alpine-slim@sha256:ce270198978c32cdded8bcaa874781e12fd6c441398529fa98d7e259df4cb420
+FROM nginxinc/nginx-unprivileged:1.27.2-alpine-slim@sha256:49ac4db4b1ed7c41e1dccf2baecb2f9ddb7a0955851f753889c2641578d16630
 WORKDIR /usr/share/nginx/html
 COPY --from=minifier /src/homepage .
