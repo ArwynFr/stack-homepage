@@ -12,8 +12,8 @@ It has gone through multiple refactorings with very different solutions.
 The build process is now the following :
 
 - Changes are pushed on main (either by me or by renovate)
-- Github Actions are triggerd whenever the sources are modified
-- A Github hosted agent builds the [Dockerfile](/src/Dockerfile) into an image and pushes to Github Packages
+- Github Actions are triggered whenever the sources are modified
+- A Github hosted agent builds the [Dockerfile](../src/Dockerfile) into an image and pushes to Github Packages
 - A self-hosted  agent clones the kubernetes resources and applies them to the local cluster
 
 Also, if needed:
