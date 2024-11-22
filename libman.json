@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "defaultDestination": "src/lib",
+  "libraries": [
+    {
+      "library": "font-awesome@6.7.1",
+      "files": [
+        "css/all.min.css",
+        "webfonts/fa-brands-400.woff2",
+        "webfonts/fa-solid-900.woff2"
+      ]
+    },
+    {
+      "library": "w3-css@4.1.0",
+      "files": [
+        "w3.min.css"
+      ],
+      "destination": "src/lib/css"
+    }
+  ]
+}
