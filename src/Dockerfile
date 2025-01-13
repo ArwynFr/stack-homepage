@@ -6,6 +6,6 @@ for ext in "css" "js" "html"; do find . -name "*.$ext" -exec minify -o {} {} \;;
 for ext in "css" "js" "png" "jpg"; do find . -name "*.$ext" -exec gzip -9k {} \;; done
 EOF
 
-FROM nginxinc/nginx-unprivileged:1.27.3-alpine-slim@sha256:24235eddde750c5f5cce43f5c4fcae24dc1cbfed9fd1d4de4017b1c0621892e4
+FROM nginxinc/nginx-unprivileged:1.27.3-alpine-slim@sha256:59083083be29bcaae95a589675abf8b0c4d0a689ce488423ea261cf4e859fb7b
 WORKDIR /usr/share/nginx/html
 COPY --from=minifier /src/homepage .
