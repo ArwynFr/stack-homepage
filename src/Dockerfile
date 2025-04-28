@@ -1,4 +1,4 @@
-FROM tdewolff/minify:v2.23.1@sha256:2e2091cc0558672d30c2cf095f9f4aff780e9d5f84df68d47a74407696820b74 AS minifier
+FROM tdewolff/minify:v2.23.2@sha256:584f7c921fffacd69dc75364ef8b3c89997eb944c570ff59db3b8b59ad48b06b AS minifier
 WORKDIR /src/homepage
 COPY . .
 RUN find . -exec minify -o {} {} \;
