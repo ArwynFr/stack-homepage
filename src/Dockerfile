@@ -4,6 +4,6 @@ COPY . .
 RUN find . -exec minify -o {} {} \;
 RUN find . -exec gzip -9k {} {} \;
 
-FROM nginxinc/nginx-unprivileged:1.29.2-alpine-slim@sha256:0dd4fb787a1db5dc69d3dd9e21b35177ffe096591b01980a67c5a799e8ce26ed
+FROM nginxinc/nginx-unprivileged:1.29.2-alpine-slim@sha256:947101c7bb9ccc54b5197f0918a9023e24df9ac64f4ae3faae8500599bb1e92a
 WORKDIR /usr/share/nginx/html
 COPY --from=minifier /src/homepage .
