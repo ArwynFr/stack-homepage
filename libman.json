@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "defaultProvider": "cdnjs",
-  "defaultDestination": "src/lib",
+  "defaultDestination": "src/www/lib",
   "libraries": [
     {
       "library": "font-awesome@6.7.1",
