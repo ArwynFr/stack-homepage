@@ -33,6 +33,8 @@ jobs:
         run: ./build/version/New-ReleaseVersion.ps1
         shell: pwsh
         id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: 🔨 CA certificate
         run: echo '${{ secrets.AUTHORITY}}' > ${PATH_CA_FILE}
