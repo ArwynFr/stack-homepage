@@ -1,4 +1,4 @@
-FROM dcycle/purgecss:1 AS purger
+FROM dcycle/purgecss:1@sha256:1ccf2be76ce8e77af635cfaa52b80e8aeb2eca38d2d3edb28a1c2a01e1554413 AS purger
 WORKDIR /src/homepage
 COPY www .
 RUN find . -name "*.css" -exec purgecss --css {} --content *.html **/*.js --output {} \;
