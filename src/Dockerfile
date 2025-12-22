@@ -1,9 +1,14 @@
+FROM dcycle/purgecss:1 AS purger
+WORKDIR /src/homepage
+COPY www .
+RUN find . -name "*.css" -exec purgecss --css {} --content *.html **/*.js --output {} \;
+
 FROM tdewolff/minify:v2.24.8@sha256:7d7ba575269b7700f3ac1635532882adfe04b293c98d8548715ca818e782bc0c AS minifier
 WORKDIR /src/homepage
-COPY . .
-RUN find . -exec minify -o {} {} \;
-RUN find . -exec gzip -9k {} {} \;
+COPY --from=purger /src/homepage /src/homepage
+RUN for ext in "css" "js" "html"; do find . -name "*.$ext" -exec minify -o {} {} \;; done
+RUN for ext in "css" "js" "html" "mp4" "png" "webp" "webm" "woff2"; do find . -name "*.$ext" -exec gzip -9k {} \;; done
 
 FROM nginxinc/nginx-unprivileged:1.29.3-alpine-slim@sha256:d9def221bf58500eb9d2f896367d149af317dce65a67bfdd1260754a4a8bc073
-WORKDIR /usr/share/nginx/html
-COPY --from=minifier /src/homepage .
+COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=minifier /src/homepage /usr/share/nginx/html
