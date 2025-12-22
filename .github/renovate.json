@@ -16,5 +16,18 @@
       "matchCurrentVersion": "!/^0/",
       "automerge": true
     }
+  ],
+  "customManagers": [
+    {
+      "customType": "jsonata",
+      "fileFormat": "json",
+      "datasourceTemplate": "npm",
+      "managerFilePatterns": [
+        "/libman.json/"
+      ],
+      "matchStrings": [
+        "libraries.{ \"packageName\": $replace(library, /@.*/, \"\"), \"currentValue\": $replace(library, /.*@/, \"\") }"
+      ]
+    }
   ]
 }
