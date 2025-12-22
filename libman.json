@@ -13,10 +13,10 @@
     },
     {
       "library": "w3-css@4.1.0",
+      "destination": "src/www/lib/css",
       "files": [
         "w3.min.css"
-      ],
-      "destination": "src/lib/css"
+      ]
     }
   ]
 }
