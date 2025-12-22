@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: app
-          image: app
+          image: "{{ .Values.dockerImage }}:{{ .Values.dockerTag | default .Chart.Version }}"
           ports:
             - containerPort: 8080
