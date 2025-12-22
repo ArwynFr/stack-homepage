@@ -6,13 +6,14 @@ on:
     branches: [main]
 
 env:
-  DOCKER_CONTEXT: ./src
-  DOCKER_PACKAGE: homepage-docker
-  HELM_PACKAGE: homepage-helm
-  HELM_PATH: ./build/helm
-  KUBE_NAMESPACE: arwynfr
-  KUBE_CA_FILE: ./ca.crt
   OCI_REGISTRY: ghcr.io
+  HELM_RELEASE: homepage
+  KUBE_NAMESPACE: arwynfr
+  PACKAGE_DOCKER: homepage-docker
+  PACKAGE_HELM: homepage-helm
+  PATH_CA_FILE: ./ca.crt
+  PATH_DOCKER_CONTEXT: ./src
+  PATH_HELM_CHART: ./build/helm
 
 jobs:
   deployment:
@@ -34,28 +35,28 @@ jobs:
         id: version
 
       - name: 🔨 CA certificate
-        run: echo '${{ secrets.AUTHORITY}}' > ${KUBE_CA_FILE}
+        run: echo '${{ secrets.AUTHORITY}}' > ${PATH_CA_FILE}
 
       - name: 📦 Build Docker image
-        run: docker build ${DOCKER_CONTEXT} --tag ${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}/${DOCKER_PACKAGE}:${{ steps.version.outputs.version }}
+        run: docker build ${PATH_DOCKER_CONTEXT} --tag ${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}/${PACKAGE_DOCKER}:${{ steps.version.outputs.version }}
 
       - name: 📦 Package Helm chart
-        run: helm package ${HELM_PATH} --version ${{ steps.version.outputs.version }}
+        run: helm package ${PATH_HELM_CHART} --version ${{ steps.version.outputs.version }}
 
       - name: 📌 Push Docker image
-        run: docker push ${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}/${DOCKER_PACKAGE}:${{ steps.version.outputs.version }}
+        run: docker push ${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}/${PACKAGE_DOCKER}:${{ steps.version.outputs.version }}
 
       - name: 📌 Push Helm chart
-        run: helm push ${HELM_PACKAGE}-${{ steps.version.outputs.version }}.tgz oci://${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}
+        run: helm push ${PACKAGE_HELM}-${{ steps.version.outputs.version }}.tgz oci://${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}
 
       - name: 🚀 Upgrade Helm chart
         run: >
-          helm upgrade ${HELM_RELEASE} oci://${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}/${HELM_PACKAGE}
+          helm upgrade ${HELM_RELEASE} oci://${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}/${PACKAGE_HELM}
           --install --force --take-ownership
           --version ${{ steps.version.outputs.version }}
           --kube-apiserver ${{ secrets.SERVER }}
           --kube-token ${{ secrets.TOKEN }}
-          --kube-ca-file ${KUBE_CA_FILE}
+          --kube-ca-file ${PATH_CA_FILE}
           --namespace ${KUBE_NAMESPACE}
 
       - name: 📣 Create GH release
