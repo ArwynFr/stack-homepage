@@ -16,20 +16,11 @@
       "automerge": true
     }
   ],
-  "customDatasources": {
-    "cdnjs": {
-      "defaultRegistryUrlTemplate": "https://api.cdnjs.com/libraries/{{packageName}}?fields=version",
-      "transformTemplates": [
-        "{\"releases\":[{\"version\":version}]}"
-      ],
-      "format": "json"
-    }
-  },
   "customManagers": [
     {
       "customType": "jsonata",
       "fileFormat": "json",
-      "datasourceTemplate": "custom.cdnjs",
+      "datasourceTemplate": "cdnjs",
       "managerFilePatterns": [
         "/libman.json/"
       ],
