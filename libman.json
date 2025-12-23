@@ -4,7 +4,7 @@
   "defaultDestination": "src/www/lib",
   "libraries": [
     {
-      "library": "font-awesome@6.7.2",
+      "library": "font-awesome@7.0.1",
       "files": [
         "css/all.min.css",
         "webfonts/fa-brands-400.woff2",
