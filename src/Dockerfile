@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS libman
-RUN dotnet tool install -g Microsoft.Web.LibraryManager.CLI command
+RUN dotnet tool install -g Microsoft.Web.LibraryManager.CLI
 WORKDIR /src/homepage
 COPY www .
 RUN libman restore
