@@ -19,6 +19,9 @@
   "customDatasources": {
     "cdnjs": {
       "defaultRegistryUrlTemplate": "https://api.cdnjs.com/libraries/{{packageName}}?fields=version",
+      "transformTemplates": [
+        "{\"releases\":[{\"version\":version}]}"
+      ],
       "format": "json"
     }
   },
