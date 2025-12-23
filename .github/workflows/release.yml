@@ -39,6 +39,12 @@ jobs:
       - name: 🔨 CA certificate
         run: echo '${{ secrets.AUTHORITY}}' > ${PATH_CA_FILE}
 
+      - name: 🔨 install dotnet tools
+        run: dotnet tool restore
+
+      - name: 🔨 restore libman libs
+        run: dotnet tool run libman restore
+
       - name: 📦 Build Docker image
         run: docker build ${PATH_DOCKER_CONTEXT} --tag ${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}/${PACKAGE_DOCKER}:${{ steps.version.outputs.version }}
 

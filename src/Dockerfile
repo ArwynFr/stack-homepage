@@ -1,12 +1,6 @@
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS libman
-WORKDIR /src/homepage
-COPY www .
-RUN dotnet tool restore
-RUN dotnet tool run libman restore
-
 FROM dcycle/purgecss:1@sha256:1ccf2be76ce8e77af635cfaa52b80e8aeb2eca38d2d3edb28a1c2a01e1554413 AS purger
 WORKDIR /src/homepage
-COPY --from=libman /src/homepage /src/homepage
+COPY www .
 RUN find . -name "*.css" -exec purgecss --css {} --content *.html **/*.js --output {} \;
 
 FROM tdewolff/minify:v2.24.8@sha256:7d7ba575269b7700f3ac1635532882adfe04b293c98d8548715ca818e782bc0c AS minifier
