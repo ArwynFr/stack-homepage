@@ -1,8 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS libman
-RUN dotnet tool install -g Microsoft.Web.LibraryManager.CLI
 WORKDIR /src/homepage
 COPY www .
-RUN libman restore
+RUN dotnet tool restore
+RUN dotnet tool run libman restore
 
 FROM dcycle/purgecss:1@sha256:1ccf2be76ce8e77af635cfaa52b80e8aeb2eca38d2d3edb28a1c2a01e1554413 AS purger
 WORKDIR /src/homepage
