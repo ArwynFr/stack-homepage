@@ -18,10 +18,8 @@
   ],
   "customDatasources": {
     "cdnjs": {
-      "defaultConfig": {
-        "extractVersion": "^(?<version>.*)$"
-      },
-      "rewriteHost": "https://api.cdnjs.com/libraries/{{packageName}}?fields=version"
+      "defaultRegistryUrlTemplate": "https://api.cdnjs.com/libraries/{{packageName}}?fields=version",
+      "format": "json"
     }
   },
   "customManagers": [
