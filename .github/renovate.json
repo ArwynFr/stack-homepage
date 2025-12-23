@@ -1,9 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
-    ":disableDependencyDashboard",
-    "docker:pinDigests"
+    "config:best-practices",
+    ":disableDependencyDashboard"
   ],
   "packageRules": [
     {
@@ -17,11 +16,19 @@
       "automerge": true
     }
   ],
+  "customDatasources": {
+    "cdnjs": {
+      "defaultConfig": {
+        "extractVersion": "^(?<version>.*)$"
+      },
+      "rewriteHost": "https://api.cdnjs.com/libraries/{{packageName}}?fields=version"
+    }
+  },
   "customManagers": [
     {
       "customType": "jsonata",
       "fileFormat": "json",
-      "datasourceTemplate": "npm",
+      "datasourceTemplate": "custom.cdnjs",
       "managerFilePatterns": [
         "/libman.json/"
       ],
