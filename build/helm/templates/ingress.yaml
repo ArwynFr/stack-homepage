@@ -1,7 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: homepage
+  name: "{{ .Release.Name }}-website"
+  namespace: "{{ .Release.Namespace }}"
   labels:
     app.kubernetes.io/name: "{{ .Values.product.name }}"
     app.kubernetes.io/instance: "{{ .Release.Name }}"
@@ -27,6 +28,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: homepage
+                name: {{ $.Release.Name }}-website
                 port:
                   number: 8080
