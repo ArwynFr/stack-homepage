@@ -8,6 +8,7 @@ on:
 env:
   OCI_REGISTRY: ghcr.io
   HELM_RELEASE: homepage
+  HELM_VALUES: ./conf/kube/prod.yaml
   KUBE_NAMESPACE: arwynfr
   PACKAGE_DOCKER: homepage-docker
   PACKAGE_HELM: homepage-helm
@@ -66,6 +67,7 @@ jobs:
           --kube-token ${{ secrets.TOKEN }}
           --kube-ca-file ${PATH_CA_FILE}
           --namespace ${KUBE_NAMESPACE}
+          --values ${HELM_VALUES}
 
       - name: 📣 Create GH release
         run: gh release create ${{ steps.version.outputs.version }} --generate-notes
