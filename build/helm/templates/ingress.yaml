@@ -12,16 +12,18 @@ metadata:
     app.kubernetes.io/part-of: "{{ .Values.product.name }}"
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    external-dns.alpha.kubernetes.io/hostname: www.arwyn.fr
+    external-dns.alpha.kubernetes.io/hostname: {{ join "," .Values.dns.hostnames | quote }}
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
 spec:
   tls:
-    - secretName: cert-www-arwyn-fr
+    - secretName: "{{ .Release.Name }}-website-cert"
       hosts:
-        - www.arwyn.fr
-        - arwyn.fr
+        {{- range .Values.dns.hostnames }}
+        - {{ . | quote }}
+        {{- end }}
   rules:
-    - host: www.arwyn.fr
+    {{- range (without .Values.dns.hostnames .Values.dns.rootDomain) }}
+    - host: {{ . | quote }}
       http:
         paths:
           - path: /
@@ -31,3 +33,4 @@ spec:
                 name: {{ $.Release.Name }}-website
                 port:
                   number: 8080
+    {{- end }}
