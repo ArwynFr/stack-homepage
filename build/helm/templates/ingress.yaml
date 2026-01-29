@@ -2,6 +2,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: homepage
+  labels:
+    app.kubernetes.io/name: "{{ .Values.product.name }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/version: "{{ .Values.image.tag | default .Chart.Version }}"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: website
+    app.kubernetes.io/part-of: "{{ .Values.product.name }}"
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     external-dns.alpha.kubernetes.io/hostname: www.arwyn.fr

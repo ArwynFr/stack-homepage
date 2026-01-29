@@ -1,1 +1,4 @@
+product:
+  name: homepage
+
 dockerImage: ghcr.io/arwynfr/stack-homepage/homepage-docker
