@@ -7,12 +7,8 @@ on:
 
 env:
   OCI_REGISTRY: ghcr.io
-  HELM_RELEASE: homepage
-  HELM_VALUES: ./conf/kube/prod.yaml
-  KUBE_NAMESPACE: arwynfr
   PACKAGE_DOCKER: homepage-docker
   PACKAGE_HELM: homepage-helm
-  PATH_CA_FILE: ./ca.crt
   PATH_DOCKER_CONTEXT: ./src
   PATH_HELM_CHART: ./build/helm
 
@@ -37,9 +33,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-      - name: 🔨 CA certificate
-        run: echo '${{ secrets.AUTHORITY}}' > ${PATH_CA_FILE}
-
       - name: 🔨 install dotnet tools
         run: dotnet tool restore
 
@@ -57,17 +50,6 @@ jobs:
 
       - name: 📌 Push Helm chart
         run: helm push ${PACKAGE_HELM}-${{ steps.version.outputs.version }}.tgz oci://${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}
-
-      - name: 🚀 Upgrade Helm chart
-        run: >
-          helm upgrade ${HELM_RELEASE} oci://${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}/${PACKAGE_HELM}
-          --install --force --take-ownership
-          --version ${{ steps.version.outputs.version }}
-          --kube-apiserver ${{ secrets.SERVER }}
-          --kube-token ${{ secrets.TOKEN }}
-          --kube-ca-file ${PATH_CA_FILE}
-          --namespace ${KUBE_NAMESPACE}
-          --values ${HELM_VALUES}
 
       - name: 📣 Create GH release
         run: gh release create ${{ steps.version.outputs.version }} --generate-notes
