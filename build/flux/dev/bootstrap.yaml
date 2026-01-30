@@ -1,0 +1,25 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: homepage
+  namespace: arwynfr
+spec:
+  interval: 5m0s
+  ref:
+    branch: main
+  timeout: 60s
+  url: https://github.com/ArwynFr/stack-homepage
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: homepage
+  namespace: app-arwynfr
+spec:
+  force: false
+  interval: 5m0s
+  path: ./build/flux/dev
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: homepage
