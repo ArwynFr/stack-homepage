@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: homepage
+  namespace: arwynfr
+spec:
+  interval: 5m
+  releaseName: homepage
+  chartRef:
+    kind: OCIRepository
+    name: homepage
+  values:
+    dns:
+      rootDomain: arwyn.fr
+      hostnames:
+        - www.arwyn.fr
+        - arwyn.fr

@@ -1,0 +1,13 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: homepage
+  namespace: arwynfr
+spec:
+  interval: 5m
+  url: oci://ghcr.io/arwynfr/stack-homepage/homepage-helm
+  layerSelector:
+    mediaType: "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
+    operation: copy
+  ref:
+    semver: "*"
