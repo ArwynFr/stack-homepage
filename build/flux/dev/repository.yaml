@@ -2,7 +2,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
   name: homepage
-  namespace: arwynfr
+  namespace: app-arwynfr
 spec:
   interval: 5m
   url: oci://ghcr.io/arwynfr/stack-homepage/homepage-helm
