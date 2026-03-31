@@ -3,7 +3,7 @@ WORKDIR /src/homepage
 COPY www .
 RUN find . -name "*.css" -exec purgecss --css {} --content *.html **/*.js --output {} \;
 
-FROM tdewolff/minify:v2.24.10@sha256:83bb2324dd6cc2b9ba9e0182e30b79daaaae223216b3c9774d9e08a2f9a443ba AS minifier
+FROM tdewolff/minify:v2.24.11@sha256:74923d2049c0e780aa1ff7d7244638fdc3f5b0a1411ea4fc9b2f326efc953063 AS minifier
 WORKDIR /src/homepage
 COPY --from=purger /src/homepage /src/homepage
 RUN for ext in "css" "js" "html"; do find . -name "*.$ext" -exec minify -o {} {} \;; done
