@@ -1,28 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: "{{ .Release.Name }}-website"
-  namespace: "{{ .Release.Namespace }}"
+  name: {{ .Release.Name }}-website
   labels:
-    app.kubernetes.io/name: {{ .Values.product.name | quote }}
-    app.kubernetes.io/instance: {{ .Release.Name | quote }}
-    app.kubernetes.io/version: {{ .Values.image.tag | default (splitList "+" .Chart.Version | first) | quote }}
-    app.kubernetes.io/managed-by: Helm
+    {{- include "labels" . | nindent 4 }}
     app.kubernetes.io/component: website
-    app.kubernetes.io/part-of: {{ .Values.product.name | quote }}
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    external-dns.alpha.kubernetes.io/hostname: {{ join "," .Values.dns.hostnames | quote }}
+    external-dns.alpha.kubernetes.io/hostname: {{ concat .Values.dns.hostnames .Values.dns.subjectAlternativeNames | join "," | quote }}
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
 spec:
   tls:
-    - secretName: "{{ .Release.Name }}-website-cert"
+    - secretName: {{ .Release.Name }}-cert
       hosts:
-        {{- range .Values.dns.hostnames }}
+        {{- range (concat .Values.dns.hostnames .Values.dns.subjectAlternativeNames) }}
         - {{ . | quote }}
         {{- end }}
   rules:
-    {{- range (without .Values.dns.hostnames .Values.dns.rootDomain) }}
+    {{- range .Values.dns.hostnames }}
     - host: {{ . | quote }}
       http:
         paths:
@@ -32,5 +27,5 @@ spec:
               service:
                 name: {{ $.Release.Name }}-website
                 port:
-                  number: 8080
+                  number: 80
     {{- end }}

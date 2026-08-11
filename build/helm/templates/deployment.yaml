@@ -1,27 +1,73 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "{{ .Release.Name }}-website"
-  namespace: "{{ .Release.Namespace }}"
+  name: {{ .Release.Name }}-website
   labels:
-    app.kubernetes.io/name: {{ .Values.product.name | quote }}
-    app.kubernetes.io/instance: {{ .Release.Name | quote }}
-    app.kubernetes.io/version: {{ .Values.image.tag | default (splitList "+" .Chart.Version | first) | quote }}
-    app.kubernetes.io/managed-by: Helm
+    {{- include "labels" . | nindent 4 }}
     app.kubernetes.io/component: website
-    app.kubernetes.io/part-of: {{ .Values.product.name | quote }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "{{ .Release.Name }}-website"
+      {{- include "selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: website
   template:
     metadata:
       labels:
-        app: "{{ .Release.Name }}-website"
+        {{- include "selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: website
     spec:
+      securityContext:
+        runAsNonRoot: true
       containers:
-        - name: app
-          image: "{{ .Values.image.name }}:{{ .Values.image.tag | default (splitList "+" .Chart.Version | first) }}"
+        - name: nginx
+          image: "{{ .Values.image.name }}:{{ .Chart.Version }}"
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: {{ .Values.securityContext.runAsUser }}
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           ports:
-            - containerPort: 8080
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 20
+            timeoutSeconds: 3
+            failureThreshold: 3
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: cache
+              mountPath: /var/cache/nginx
+            - name: run
+              mountPath: /var/run
+          resources:
+            requests:
+              ephemeral-storage: 0
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
+            limits:
+              ephemeral-storage: "1Gi"
+              memory: {{ .Values.resources.limits.memory }}
+              cpu: {{ .Values.resources.limits.cpu }}
+      volumes:
+        - name: tmp
+          emptyDir: {}
+        - name: cache
+          emptyDir: {}
+        - name: run
+          emptyDir: {}
