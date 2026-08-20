@@ -5,6 +5,10 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+  packages: write
+
 env:
   OCI_REGISTRY: ghcr.io
   PACKAGE_DOCKER: homepage-docker
@@ -29,7 +33,6 @@ jobs:
       - name: 🔨 Version number
         run: ./build/version/New-ReleaseVersion.ps1
         shell: pwsh
-        id: version
         env:
           GH_TOKEN: ${{ github.token }}
 
@@ -40,18 +43,18 @@ jobs:
         run: dotnet tool run libman restore
 
       - name: 📦 Build Docker image
-        run: docker build ${PATH_DOCKER_CONTEXT} --tag ${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}/${PACKAGE_DOCKER}:${{ steps.version.outputs.version }}
+        run: docker build ${PATH_DOCKER_CONTEXT} --tag "${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}/${PACKAGE_DOCKER}:${VERSION}"
 
       - name: 📦 Package Helm chart
-        run: helm package ${PATH_HELM_CHART} --version ${{ steps.version.outputs.version }}
+        run: helm package ${PATH_HELM_CHART} --version "${VERSION}"
 
       - name: 📌 Push Docker image
-        run: docker push ${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}/${PACKAGE_DOCKER}:${{ steps.version.outputs.version }}
+        run: docker push "${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}/${PACKAGE_DOCKER}:${VERSION}"
 
       - name: 📌 Push Helm chart
-        run: helm push ${PACKAGE_HELM}-${{ steps.version.outputs.version }}.tgz oci://${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}
+        run: helm push "${PACKAGE_HELM}-${VERSION}.tgz" "oci://${OCI_REGISTRY}/${GITHUB_REPOSITORY@L}"
 
       - name: 📣 Create GH release
-        run: gh release create ${{ steps.version.outputs.version }} --generate-notes
+        run: gh release create "${VERSION}" --generate-notes --target "${GITHUB_SHA}"
         env:
           GH_TOKEN: ${{ github.token }}

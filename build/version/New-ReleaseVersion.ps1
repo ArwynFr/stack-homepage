@@ -12,4 +12,5 @@ $TargetVersion = if ($CurrentVersion -ge $CurrentDate) {
   $CurrentDate
 }
 
+"VERSION=${TargetVersion}" >> $env:GITHUB_ENV
 "version=${TargetVersion}" >> $env:GITHUB_OUTPUT
