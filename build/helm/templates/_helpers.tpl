@@ -1,11 +1,11 @@
-{{- define "labels" -}}
-{{ include "selectorLabels" . }}
+{{- define "homepage.labels" -}}
+{{ include "homepage.selectorLabels" . }}
 app.kubernetes.io/version: {{ .Chart.Version | quote }}
-app.kubernetes.io/part-of: {{ .Values.product.name | quote }}
+app.kubernetes.io/part-of: {{ .Values.productName | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service | quote}}
 {{- end -}}
 
-{{- define "selectorLabels" -}}
-app.kubernetes.io/name: {{ .Values.product.name | quote }}
+{{- define "homepage.selectorLabels" -}}
+app.kubernetes.io/name: {{ .Values.productName | quote }}
 app.kubernetes.io/instance: {{ .Release.Name | quote }}
 {{- end -}}

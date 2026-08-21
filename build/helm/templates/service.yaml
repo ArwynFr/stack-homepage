@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-website
   labels:
-    {{- include "labels" . | nindent 4 }}
+    {{- include "homepage.labels" . | nindent 4 }}
     app.kubernetes.io/component: website
 spec:
   selector:
-    {{- include "selectorLabels" . | nindent 4 }}
+    {{- include "homepage.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: website
   ports:
     - port: 80

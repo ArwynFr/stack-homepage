@@ -1,8 +1,5 @@
-product:
-  name: arwyn-homepage
-
-image:
-  name: ghcr.io/arwynfr/stack-homepage/homepage-docker
+productName: arwynfr-homepage
+imageName: ghcr.io/arwynfr/stack-homepage/homepage-docker
 
 securityContext:
   runAsUser: 101
@@ -11,11 +8,12 @@ resources:
   requests:
     cpu: 10m
     memory: 32Mi
+    storage: 0
   limits:
     cpu: 100m
     memory: 128Mi
+    storage: 1Gi
 
-dns:
-  hostnames:
-    - dev.arwyn.fr
-  subjectAlternativeNames: []
+ingress:
+  fromToWwwRedirect: false
+  hostname: dev.arwyn.fr

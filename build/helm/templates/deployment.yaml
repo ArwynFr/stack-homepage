@@ -3,25 +3,25 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}-website
   labels:
-    {{- include "labels" . | nindent 4 }}
+    {{- include "homepage.labels" . | nindent 4 }}
     app.kubernetes.io/component: website
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "selectorLabels" . | nindent 6 }}
+      {{- include "homepage.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: website
   template:
     metadata:
       labels:
-        {{- include "selectorLabels" . | nindent 8 }}
+        {{- include "homepage.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: website
     spec:
       securityContext:
         runAsNonRoot: true
       containers:
         - name: nginx
-          image: "{{ .Values.image.name }}:{{ .Chart.Version }}"
+          image: "{{ .Values.imageName }}:{{ .Chart.Version }}"
           securityContext:
             runAsNonRoot: true
             runAsUser: {{ .Values.securityContext.runAsUser }}
@@ -57,11 +57,11 @@ spec:
               mountPath: /var/run
           resources:
             requests:
-              ephemeral-storage: 0
+              ephemeral-storage: {{ .Values.resources.requests.storage }}
               memory: {{ .Values.resources.requests.memory }}
               cpu: {{ .Values.resources.requests.cpu }}
             limits:
-              ephemeral-storage: "1Gi"
+              ephemeral-storage: {{ .Values.resources.limits.storage }}
               memory: {{ .Values.resources.limits.memory }}
               cpu: {{ .Values.resources.limits.cpu }}
       volumes:
