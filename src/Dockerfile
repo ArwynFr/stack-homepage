@@ -9,6 +9,6 @@ COPY --from=purger /src/homepage /src/homepage
 RUN for ext in "css" "js" "html"; do find . -name "*.$ext" -exec minify -o {} {} \;; done
 RUN for ext in "css" "js" "html" "mp4" "png" "webp" "webm" "woff2"; do find . -name "*.$ext" -exec gzip -9k {} \;; done
 
-FROM nginxinc/nginx-unprivileged:1.31.4-alpine-slim@sha256:021f32b23e2bfc8610ccdec499b709625dcee1369884d7a51bd8a23a3accb301
+FROM nginxinc/nginx-unprivileged:1.31.4-alpine-slim@sha256:d668aa123a6ec3216ba5ae6b398ae8001d5e81d3142d3659e20354fd0c3c3125
 COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=minifier /src/homepage /usr/share/nginx/html
